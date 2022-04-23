@@ -4,7 +4,14 @@
   "repository": "git@github.com:jinyongp/super-gulp.git",
   "author": "jinyongp <dev.jinyongp@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "gulp dev",
+    "build": "gulp build"
+  },
   "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/register": "^7.17.7",
     "gulp": "^4.0.2"
   }
 }
