@@ -10,6 +10,7 @@ import csso from 'gulp-csso';
 import browserify from 'gulp-bro';
 import babelify from 'babelify';
 import pages from 'gulp-gh-pages';
+import favicons from 'gulp-favicons';
 
 const sass = gulpSass(dartSass);
 
@@ -41,6 +42,24 @@ const js = () =>
     )
     .pipe(gulp.dest('dist/js'));
 
+const favicon = () =>
+  gulp
+    .src('src/img/favicon.svg')
+    .pipe(
+      favicons({
+        html: 'index.html',
+        icons: {
+          favicons: true,
+          android: false,
+          appleIcon: false,
+          appleStartup: false,
+          windows: false,
+          yandex: false,
+        },
+      }),
+    )
+    .pipe(gulp.dest('dist/favicons'));
+
 const ws = () => gulp.src('dist').pipe(webserver({ livereload: true }));
 
 const publish = () => gulp.src('dist/**/*').pipe(pages());
@@ -52,7 +71,7 @@ const watch = () => {
 };
 
 const prepare = gulp.parallel(clean);
-const assets = gulp.parallel(html, css, js, img);
+const assets = gulp.parallel(html, css, js, img, favicon);
 const live = gulp.parallel(ws, watch);
 
 export const build = gulp.series(prepare, assets);
