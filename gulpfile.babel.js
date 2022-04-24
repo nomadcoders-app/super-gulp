@@ -9,10 +9,11 @@ import autoprefixer from 'gulp-autoprefixer';
 import csso from 'gulp-csso';
 import browserify from 'gulp-bro';
 import babelify from 'babelify';
+import pages from 'gulp-gh-pages';
 
 const sass = gulpSass(dartSass);
 
-const clean = () => del('dist');
+const clean = () => del(['dist', '.publish']);
 
 const html = () => gulp.src('src/index.pug').pipe(pug()).pipe(gulp.dest('dist'));
 
@@ -42,14 +43,18 @@ const js = () =>
 
 const ws = () => gulp.src('dist').pipe(webserver({ livereload: true }));
 
+const publish = () => gulp.src('dist/**/*').pipe(pages());
+
 const watch = () => {
   gulp.watch('src/**/*.pug', html);
   gulp.watch('src/**/*.scss', css);
   gulp.watch('src/**/*.js', js);
 };
 
-export const dev = gulp.series(
-  gulp.parallel(clean),
-  gulp.parallel(html, css, js, img),
-  gulp.parallel(ws, watch),
-);
+const prepare = gulp.parallel(clean);
+const assets = gulp.parallel(html, css, js, img);
+const live = gulp.parallel(ws, watch);
+
+export const build = gulp.series(prepare, assets);
+export const dev = gulp.series(build, live);
+export const deploy = gulp.series(build, publish, clean);
