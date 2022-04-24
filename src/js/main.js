@@ -4,18 +4,13 @@ window.addEventListener('DOMContentLoaded', () => {
   document.body.style.cursor = 'none';
 
   const logo = document.querySelector('#main-logo');
-
   const cursor = document.querySelector('.cursor');
   cursor.style.visibility = 'hidden';
+
   const cursorSize = 32;
 
-  let [centerX, centerY] = getCenterPosition(logo);
-
-  window.addEventListener('resize', () => {
-    [centerX, centerY] = getCenterPosition(logo);
-  });
-
   document.body.addEventListener('pointermove', (event) => {
+    const [centerX, centerY] = getCenterPosition(logo);
     cursor.style.visibility = 'visible';
     const [x, y] = getCursorPosition(event);
     const dX = (centerX - x) / 30;
