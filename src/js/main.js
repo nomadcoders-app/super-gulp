@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const hyp = Math.hypot(centerX - x, centerY - y);
     const rad = Math.atan2(centerY - y, centerX - x);
     const deg = rad * (180 / Math.PI) + 225;
-    logo.style.filter = `drop-shadow(${dX}px ${dY}px 2px rgba(0 0 0 / 30%))`;
+    logo.style.filter = `drop-shadow(${dX}px ${dY}px ${hyp / 80}px rgba(0 0 0 / 50%))`;
     cursor.style.transform = getTransformStyle(
       x - cursorSize / 2,
       y - cursorSize / 2,
